@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1098265057822",
+    "firebase_url": "https://flutter-reflectly-android.firebaseio.com",
+    "project_id": "flutter-reflectly-android",
+    "storage_bucket": "flutter-reflectly-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098265057822:android:2ad11605d4655d1a",
+        "android_client_info": {
+          "package_name": "io.shivamvk.flutterreflectly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098265057822-pr61hoa21shj4ah1q5tom68dk33t48s6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAad3L6jPdnSHo-6yF_xY0H_1o5ikihz8s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
