@@ -9,6 +9,7 @@ This project has
  - has Side Navigation Drawer
  - has both Persistent and Modal Bottom Sheets
  - has an API call using FutureBuilder
+ - has Shared Prefs used for better performance
 
 Here are a few images
 
