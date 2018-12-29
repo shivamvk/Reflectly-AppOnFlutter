@@ -43,6 +43,7 @@ flutter:
 
   assets:
     - assets/glogo.png
+    - assets/newsplace.png
 
   uses-material-design: true
 

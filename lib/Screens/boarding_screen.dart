@@ -4,15 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'signup_screen.dart';
 import 'signin_screen.dart';
 
-class BoardingScreen extends StatefulWidget{
-
+class BoardingScreen extends StatefulWidget {
   @override
   _BoardingScreenState createState() => _BoardingScreenState();
 }
 
 class _BoardingScreenState extends State<BoardingScreen>
-      with TickerProviderStateMixin{
-
+    with TickerProviderStateMixin {
   AnimationController _subheadingController;
   Animation<double> _subheadingOpacity;
 
@@ -22,25 +20,30 @@ class _BoardingScreenState extends State<BoardingScreen>
   @override
   void initState() {
     super.initState();
-    _subheadingController = new AnimationController(vsync: this,duration: const Duration(milliseconds: 1800));
-    _subheadingOpacity = new CurvedAnimation(parent: _subheadingController, curve: Curves.easeIn )..addStatusListener((status) {
-    if (status == AnimationStatus.completed) {
-    _subheadingController.dispose();
-    } else if (status == AnimationStatus.dismissed) {
-    _subheadingController.forward();
-    }
-    });
+    _subheadingController = new AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1800));
+    _subheadingOpacity =
+        new CurvedAnimation(parent: _subheadingController, curve: Curves.easeIn)
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              _subheadingController.dispose();
+            } else if (status == AnimationStatus.dismissed) {
+              _subheadingController.forward();
+            }
+          });
     _subheadingController.forward();
 
-
-    _headingController = new AnimationController(vsync: this,duration: const Duration(milliseconds: 800));
-    _headingOpacity = new CurvedAnimation(parent: _headingController, curve: Curves.easeIn )..addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _headingController.dispose();
-      } else if (status == AnimationStatus.dismissed) {
-        _headingController.forward();
-      }
-    });
+    _headingController = new AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 800));
+    _headingOpacity =
+        new CurvedAnimation(parent: _headingController, curve: Curves.easeIn)
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              _headingController.dispose();
+            } else if (status == AnimationStatus.dismissed) {
+              _headingController.forward();
+            }
+          });
     _headingController.forward();
   }
 
@@ -53,7 +56,6 @@ class _BoardingScreenState extends State<BoardingScreen>
 
   @override
   Widget build(BuildContext context) {
-
     final top = Padding(
       padding: const EdgeInsets.only(top: 120.0),
       child: new Center(
@@ -67,8 +69,7 @@ class _BoardingScreenState extends State<BoardingScreen>
                     color: Colors.white,
                     fontSize: 40.0,
                     fontFamily: "Signika",
-                    fontWeight: FontWeight.w600
-                ),
+                    fontWeight: FontWeight.w600),
               ),
             ),
             new FadeTransition(
@@ -79,8 +80,7 @@ class _BoardingScreenState extends State<BoardingScreen>
                     color: Colors.white,
                     fontSize: 40.0,
                     fontFamily: "Signika",
-                    fontWeight: FontWeight.w600
-                ),
+                    fontWeight: FontWeight.w600),
               ),
             ),
             Padding(
@@ -93,8 +93,7 @@ class _BoardingScreenState extends State<BoardingScreen>
                       color: Colors.grey,
                       fontSize: 25.0,
                       fontFamily: "Signika",
-                      fontWeight: FontWeight.w100
-                  ),
+                      fontWeight: FontWeight.w100),
                 ),
               ),
             ),
@@ -106,8 +105,7 @@ class _BoardingScreenState extends State<BoardingScreen>
                     color: Colors.grey,
                     fontSize: 25.0,
                     fontFamily: "Signika",
-                    fontWeight: FontWeight.w100
-                ),
+                    fontWeight: FontWeight.w100),
               ),
             ),
           ],
@@ -116,57 +114,51 @@ class _BoardingScreenState extends State<BoardingScreen>
     );
 
     final bottom = new Container(
-     child: Column(
-       children: <Widget>[
-         new FadeTransition(
-           opacity: _headingOpacity,
-           child: new RaisedButton(
-             onPressed: signup,
-             elevation: 15.0,
-             color: Colors.white,
-             textColor: Colors.deepPurpleAccent,
-             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-             shape: new RoundedRectangleBorder(
-               borderRadius: new BorderRadius.circular(30.0)
-             ),
-             child: Text(
-               "Hi, Reflectly!",
-               style: TextStyle(
-                   fontSize: 20.0,
-                   fontFamily: "Signika"
-               ),
-             ),
-           ),
-         ),
-         new Padding(padding: EdgeInsets.only(top: 32.0)),
-         new GestureDetector(
-           onTap: () {
-             Navigator.push(
-                 context,
-                 CupertinoPageRoute(builder: (context) => SigninScreen())
-             );
-           },
-           child: new Text(
-             "I ALREADY HAVE AN ACCOUNT",
-             style: new TextStyle(
-                 color: Colors.white,
-                 fontSize: 15.0,
-                 fontFamily: "Signika",
-             ),
-           ),
-         ),
-         new Padding(padding: EdgeInsets.only(top: 64.0)),
-         new Text(
-           "By creating a new acount or signing in with Facebook you are agreeing to our "
-               "terms of service and privacy policy",
-           style: new TextStyle(
-               color: Colors.grey,
-               fontSize: 10.0,
-           ),
-           textAlign: TextAlign.center,
-         ),
-       ],
-     ),
+      child: Column(
+        children: <Widget>[
+          new FadeTransition(
+            opacity: _headingOpacity,
+            child: new RaisedButton(
+              onPressed: signup,
+              elevation: 15.0,
+              color: Colors.white,
+              textColor: Colors.deepPurpleAccent,
+              padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+              child: Text(
+                "Hi, Reflectly!",
+                style: TextStyle(fontSize: 20.0, fontFamily: "Signika"),
+              ),
+            ),
+          ),
+          new Padding(padding: EdgeInsets.only(top: 32.0)),
+          new GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SigninScreen()));
+            },
+            child: new Text(
+              "I ALREADY HAVE AN ACCOUNT",
+              style: new TextStyle(
+                color: Colors.white,
+                fontSize: 15.0,
+                fontFamily: "Signika",
+              ),
+            ),
+          ),
+          new Padding(padding: EdgeInsets.only(top: 64.0)),
+          new Text(
+            "By creating a new acount or signing in with Facebook you are agreeing to our "
+                "terms of service and privacy policy",
+            style: new TextStyle(
+              color: Colors.grey,
+              fontSize: 10.0,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
 
     return new Scaffold(
@@ -183,8 +175,6 @@ class _BoardingScreenState extends State<BoardingScreen>
 
   void signup() {
     Navigator.push(
-        context,
-        CupertinoPageRoute(builder: (context) => SignupScreen())
-    );
+        context, MaterialPageRoute(builder: (context) => SignupScreen()));
   }
 }
