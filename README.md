@@ -1,16 +1,13 @@
 # flutter_reflectly
 
-A new Flutter application.
+## Tried some UI using flutter.
 
-## Getting Started
+This project has 
+ - has some complex UI designs and animations.
+ - has form validations
+ - has an API call using FutureBuilder
 
-This project is a starting point for a Flutter application.
+Here are a few images
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+<img src="https://github.com/shivamvk/Reflectly---Native-app-on-flutter/blob/v1.0/Screenshot_20181228-193810.jpg" height="450px" width="275px"> <img src="https://github.com/shivamvk/Reflectly---Native-app-on-flutter/blob/v1.0/Screenshot_20181228-193829.jpg" height="450px" width="275px"> <img src="https://github.com/shivamvk/Reflectly---Native-app-on-flutter/blob/v1.0/Screenshot_20181228-193844.jpg" height="450px" width="275px">
