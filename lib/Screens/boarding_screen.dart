@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'signup_screen.dart';
 import 'signin_screen.dart';
 
 class BoardingScreen extends StatefulWidget {
+
   @override
   _BoardingScreenState createState() => _BoardingScreenState();
 }
 
 class _BoardingScreenState extends State<BoardingScreen>
     with TickerProviderStateMixin {
+
   AnimationController _subheadingController;
   Animation<double> _subheadingOpacity;
 
@@ -20,6 +23,7 @@ class _BoardingScreenState extends State<BoardingScreen>
   @override
   void initState() {
     super.initState();
+
     _subheadingController = new AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1800));
     _subheadingOpacity =

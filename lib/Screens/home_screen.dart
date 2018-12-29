@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'post.dart';
 import 'home_tab_screen.dart';
 import 'news_tab_screen.dart';
 import 'profile_tab_screen.dart';
+import 'signup_screen.dart';
 import 'boarding_screen.dart';
 
 int _current_index = 0;
@@ -24,6 +28,13 @@ final List<Widget> _children = [
 ];
 
 class HomeScreen extends StatefulWidget{
+
+  final FirebaseUser user;
+
+  const HomeScreen({
+    Key key,
+    this.user
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -70,10 +81,10 @@ class _HomeScreenState extends State<HomeScreen>{
           children: <Widget>[
             new UserAccountsDrawerHeader(
               accountName: new Text(
-                  "Shivam Bhasin"
+                  widget.user.displayName
               ),
               accountEmail: new Text(
-                  "shivam.vk529@gmail.com"
+                  widget.user.email
               ),
               currentAccountPicture: new CircleAvatar(
                 backgroundColor: Colors.white,
@@ -145,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen>{
                         ),
                         new FlatButton(
                           onPressed: () {
+                            new GoogleSignIn().signOut();
                             Navigator.pop(context);
                             Navigator.pushReplacement(
                               context,

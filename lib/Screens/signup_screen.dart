@@ -17,6 +17,9 @@ final _nameController = new TextEditingController();
 final _emailController = new TextEditingController();
 final _passwrodController = new TextEditingController();
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final GoogleSignIn _googleSignIn = new GoogleSignIn();
+
 class SignupScreen extends StatefulWidget{
   @override
   _SignupScreenState createState() => _SignupScreenState();
@@ -25,7 +28,51 @@ class SignupScreen extends StatefulWidget{
 
 class _SignupScreenState extends State<SignupScreen>{
 
+  Future<FirebaseUser> _signInWithGoogle() async {
+    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication signInAuthentication = await googleSignInAccount.authentication;
+
+    FirebaseUser user = await _auth.signInWithGoogle(
+      idToken: signInAuthentication.idToken,
+      accessToken: signInAuthentication.accessToken
+    );
+
+    setState(() {
+      _email = user.email;
+    });
+
+    return user;
+  }
+
+  void _signInWithGoogleSuccessful(FirebaseUser user){
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => new HomeScreen(user: user))
+    );
+  }
+
+  Future<FirebaseUser> _signInWithEmail() async {
+
+    setState(() {
+      _name = _nameController.text;
+      _email = _emailController.text;
+      _passwrord = _passwrodController.text;
+    });
+
+    FirebaseUser user = await _auth.signInWithEmailAndPassword(
+      email: _email,
+      password: _passwrord
+    );
+
+    setState(() {
+      _email = user.email + user.isEmailVerified.toString();
+    });
+
+    return user;
+  }
+
   final _formKey = new GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -64,6 +111,7 @@ class _SignupScreenState extends State<SignupScreen>{
             new Form(
               key: _formKey,
               child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   new TextField(
                     decoration: new InputDecoration(
@@ -102,7 +150,7 @@ class _SignupScreenState extends State<SignupScreen>{
                     padding: EdgeInsets.fromLTRB(16.0, 48.0, 16.0, 24.0),
                     child: new RaisedButton(
                       elevation: 5.0,
-                      onPressed: signup,
+                      onPressed: _signInWithEmail,
                       color: Colors.white,
                       textColor: Colors.deepPurpleAccent,
                       shape: new RoundedRectangleBorder(
@@ -123,7 +171,9 @@ class _SignupScreenState extends State<SignupScreen>{
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                     child: new RaisedButton(
-                      onPressed: signupWithGoogle,
+                      onPressed: () => _signInWithGoogle()
+                        .then((FirebaseUser user) => _signInWithGoogleSuccessful(user))
+                        .catchError((e) => print(e)),
                       shape: new RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)
                       ),
@@ -158,9 +208,6 @@ class _SignupScreenState extends State<SignupScreen>{
                 ],
               ),
             ),
-            new Text(_name),
-            new Text(_email),
-            new Text(_passwrord)
           ],
         ),
       ),
@@ -177,21 +224,5 @@ class _SignupScreenState extends State<SignupScreen>{
         showEmailError = true;
       });
     }
-  }
-  
-  void signup() {
-    setState(() {
-      _name = _nameController.text;
-      _passwrord = _passwrodController.text;
-      _email = _emailController.text;
-    });
-    /*Navigator.pop(context);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomeScreen())
-    );*/
-  }
-
-  void signupWithGoogle() {
   }
 }
