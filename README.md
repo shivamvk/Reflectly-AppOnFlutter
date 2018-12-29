@@ -5,6 +5,9 @@
 This project has 
  - has some complex UI designs and animations.
  - has form validations
+ - has Bottom Navigation bar
+ - has Side Navigation Drawer
+ - has both Persistent and Modal Bottom Sheets
  - has an API call using FutureBuilder
 
 Here are a few images
