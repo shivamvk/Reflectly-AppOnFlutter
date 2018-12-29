@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
+import 'boarding_screen.dart';
 
 bool showNameError = false;
 bool showEmailError = false;
@@ -37,17 +39,25 @@ class _SignupScreenState extends State<SignupScreen>{
       accessToken: signInAuthentication.accessToken
     );
 
-    setState(() {
-      _email = user.email;
-    });
+    savePreferences(user.displayName, user.email)
+      .then((bool committed) {
+
+      });
 
     return user;
+  }
+
+  Future<bool> savePreferences(String name, String email) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("userName", name);
+    prefs.setString("userEmail", email);
+    return prefs.commit();
   }
 
   void _signInWithGoogleSuccessful(FirebaseUser user){
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => new HomeScreen(user: user))
+      MaterialPageRoute(builder: (context) => new HomeScreen())
     );
   }
 
@@ -92,7 +102,10 @@ class _SignupScreenState extends State<SignupScreen>{
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => BoardingScreen())
+                      );
                     },
                   ),
                   Padding(

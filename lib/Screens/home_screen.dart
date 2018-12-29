@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'post.dart';
 import 'home_tab_screen.dart';
@@ -29,18 +32,45 @@ final List<Widget> _children = [
 
 class HomeScreen extends StatefulWidget{
 
-  final FirebaseUser user;
-
-  const HomeScreen({
-    Key key,
-    this.user
-  }) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen>{
+  String _name = "";
+  String _email = "";
+
+  @override
+  void initState(){
+    getNamePreferences()
+        .then(updateName);
+    getEmailPreferences()
+        .then(updateEmail);
+    super.initState();
+  }
+
+  void updateName(String name){
+    setState(() {
+      this._name = name;
+    });
+  }
+
+  void updateEmail(String email){
+    setState(() {
+      this._email = email;
+    });
+  }
+
+  Future<String> getNamePreferences() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("userName");
+  }
+
+  Future<String> getEmailPreferences() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("userEmail");
+  }
+
   @override
   Widget build(BuildContext context) {
     final bottom_nav = new BottomNavigationBar(
@@ -81,10 +111,10 @@ class _HomeScreenState extends State<HomeScreen>{
           children: <Widget>[
             new UserAccountsDrawerHeader(
               accountName: new Text(
-                  widget.user.displayName
+                _name == null ? "hey" : _name
               ),
               accountEmail: new Text(
-                  widget.user.email
+                _email == null ? "hey" : _email
               ),
               currentAccountPicture: new CircleAvatar(
                 backgroundColor: Colors.white,
@@ -156,12 +186,8 @@ class _HomeScreenState extends State<HomeScreen>{
                         ),
                         new FlatButton(
                           onPressed: () {
-                            new GoogleSignIn().signOut();
-                            Navigator.pop(context);
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => BoardingScreen())
-                            );
+                            clearSharedPrefs()
+                              .then((bool) => _logOut(bool));
                           },
                           child: new Text('Yes'),
                         )
@@ -207,5 +233,17 @@ class _HomeScreenState extends State<HomeScreen>{
     setState(() {
       _current_index = index;
     });
+  }
+
+  Future<bool> clearSharedPrefs() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("userName", "");
+    prefs.setString("userEmail", "");
+    prefs.commit();
+  }
+
+  FutureOr _logOut(bool value) {
+    Navigator.pop(context);
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BoardingScreen()));
   }
 }

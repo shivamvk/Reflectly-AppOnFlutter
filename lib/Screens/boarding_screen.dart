@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'home_screen.dart';
 import 'signup_screen.dart';
 import 'signin_screen.dart';
 
@@ -14,6 +16,16 @@ class BoardingScreen extends StatefulWidget {
 class _BoardingScreenState extends State<BoardingScreen>
     with TickerProviderStateMixin {
 
+  String _name = "";
+
+  Future<String> getNamePreferences() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _name = prefs.getString("userName") ?? "";
+    });
+    return prefs.getString("userName") ?? "";
+  }
+
   AnimationController _subheadingController;
   Animation<double> _subheadingOpacity;
 
@@ -23,6 +35,13 @@ class _BoardingScreenState extends State<BoardingScreen>
   @override
   void initState() {
     super.initState();
+
+    getNamePreferences()
+      .then((value) {
+        if(value.isNotEmpty){
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        }
+      });
 
     _subheadingController = new AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1800));
@@ -104,7 +123,7 @@ class _BoardingScreenState extends State<BoardingScreen>
             new FadeTransition(
               opacity: _subheadingOpacity,
               child: new Text(
-                "journaling companion",
+                "journaling experience",
                 style: new TextStyle(
                     color: Colors.grey,
                     fontSize: 25.0,
@@ -178,7 +197,7 @@ class _BoardingScreenState extends State<BoardingScreen>
   }
 
   void signup() {
-    Navigator.push(
+    Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => SignupScreen()));
   }
 }
