@@ -4,7 +4,7 @@
 
 This project has 
  - has some complex UI designs and animations.
- - has form validations
+ - has Google Sign in Auth
  - has Bottom Navigation bar
  - has Side Navigation Drawer
  - has both Persistent and Modal Bottom Sheets
